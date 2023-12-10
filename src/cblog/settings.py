@@ -85,16 +85,16 @@ def get_ssm_parameters():
     # AWS SSM Parametr define
     username_param = ssm.get_parameter(Name='/mehmet/capstone/username')
     password_param = ssm.get_parameter(Name="/mehmet/capstone/password", WithDecryption=True)
-    rds_endpoint = ssm.get_parameter(Name='/mehmet/capstone/endpoint')
+
 
     # Parametre retrieve
     username = username_param['Parameter']['Value']
     password = password_param['Parameter']['Value']
-    endpoint = rds_endpoint['Parameter']['Value']
-    return username, password, endpoint
+    
+    return username, password
 
 # SSM put
-db_username, db_password, db_endpoint = get_ssm_parameters()
+db_username, db_password = get_ssm_parameters()
 
 DATABASES = {
     'default': {
@@ -102,7 +102,7 @@ DATABASES = {
         'NAME': 'clarusway',
         'USER': db_username,
         'PASSWORD': db_password,
-        'HOST': db_endpoint,
+        'HOST': 'aws-capstone-rds.cui7wp8qqsm3.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
